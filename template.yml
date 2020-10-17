@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: >-
+  category_service
+
+Transform:
+- AWS::Serverless-2016-10-31
+
+Resources:
+  getByCategoryFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/handlers/category.getByCategoryHandler
+      Runtime: nodejs10.x
+      MemorySize: 128
+      Timeout: 100
+      Description: A simple example includes a HTTP get method to get category wise data.
+      Events:
+        Api:
+          Type: Api
+          Properties:
+            Path: /categories/{category}
+            Method: GET
+
+Outputs:
+  WebEndpoint:
+    Description: "API Gateway endpoint Prod URL"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod"
